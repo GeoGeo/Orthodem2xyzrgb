@@ -35,6 +35,7 @@ from qgis.core import *
 import traceback
 import time
 from rastertools import *
+import random
 import re
 
 class Worker(QtCore.QObject):
@@ -123,12 +124,15 @@ class Worker(QtCore.QObject):
         tick = time.time()
         if self.headers:
             fo.write(self.formatheaders(self.style))
+        jitter = self.rdr.red.xpixelsize *.333
         try:
             lastprogress = 0
             
             for prog, point in self.rdr.getPointsAndProgress():
                 if len(point) > 0:
                     x,y,z,r,g,b = point
+                    x = x - jitter + (2.0*random.random()*jitter)
+                    y = y - jitter + (2.0*random.random()*jitter)
                     line = self.formatline (self.style, x, y, z, r, g, b)
                     fo.write(line)
                     ct += 1
