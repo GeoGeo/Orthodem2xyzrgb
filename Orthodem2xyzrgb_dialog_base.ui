@@ -172,25 +172,6 @@
     <string>...</string>
    </property>
   </widget>
-  <widget class="QgsSpinBox" name="mQgsSpinBox">
-   <property name="geometry">
-    <rect>
-     <x>168</x>
-     <y>120</y>
-     <width>104</width>
-     <height>33</height>
-    </rect>
-   </property>
-   <property name="minimum">
-    <number>1</number>
-   </property>
-   <property name="maximum">
-    <number>500</number>
-   </property>
-   <property name="value">
-    <number>16</number>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
@@ -418,14 +399,26 @@
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QSpinBox" name="mQgsSpinBox">
+   <property name="geometry">
+    <rect>
+     <x>168</x>
+     <y>124</y>
+     <width>102</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="minimum">
+    <number>1</number>
+   </property>
+   <property name="maximum">
+    <number>512</number>
+   </property>
+   <property name="value">
+    <number>16</number>
+   </property>
+  </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QgsSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>qgsspinbox.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>
