@@ -53,21 +53,24 @@ class Worker(QtCore.QObject):
         mynodata = []
         self.style = self.wid.dlg.cbFormat.currentIndex()
         self.headers = self.wid.dlg.cbHeaders.isChecked()
-        if self.wid.dlg.cbNoData.isChecked():
-            nodatavals = self.wid.dlg.leNoData.text()
-            nodatavals = re.sub("\s+","",nodatavals)
-            nodatavals = re.sub("[,]","|",nodatavals)
-            mynodatatext = nodatavals.split("|")
-            for x in mynodatatext:
-                try:
-                    mynodata.append(int(x))
-                except:
-                    pass
-            print "Using nodata = %s" % str(mynodata)
+        writenodata = not self.wid.dlg.cbNoData.isChecked()
+        outputnodata = self.wid.dlg.sbNoData.value()
+        nodatavals = self.wid.dlg.leNoData.text()
+        nodatavals = re.sub("\s+","",nodatavals)
+        nodatavals = re.sub("[,]","|",nodatavals)
+        mynodatatext = nodatavals.split("|")
+        for x in mynodatatext:
+            try:
+                mynodata.append(int(x))
+            except:
+                pass
+        print "Using nodata = %s" % str(mynodata)
         self.rdr = RastersToXYZRGB(self.wid.dlg.leOrthomosaic.text(),
                       self.wid.dlg.leDem.text(),
                       self.wid.dlg.mQgsSpinBox.value(),
-                      nodata = mynodata)
+                      writenodata = writenodata,
+                      nodata = mynodata,
+                      outputnodata = outputnodata)
     
     def getstartinfo(self):
         '''
@@ -93,31 +96,32 @@ class Worker(QtCore.QObject):
         return "\n".join([str(x) for x in inform])
     
     def formatline (self, style, x, y, z, r, g, b):
-        if style == 0:
-            return "%2.4f,%2.4f,%2.4f,%d,%d,%d\n" % (x, y, z, r, g, b)
-        if style == 1:
-            return "%2.4f,%2.4f,%2.4f\n" % (x, y, z)
-        if style==2:
-            return "%2.4f %2.4f %2.4f\n" % (x, y, z)
-        if style==3:
+        if style==0:
             return "%2.4f %2.4f %2.4f %d %d %d\n" % (x, y, z, r, g, b)
+        if style == 1:
+            return "%2.4f,%2.4f,%2.4f,%d,%d,%d\n" % (x, y, z, r, g, b)
+        if style == 2:
+            return "%2.4f,%2.4f,%2.4f\n" % (x, y, z)
+        if style==3:
+            return "%2.4f %2.4f %2.4f\n" % (x, y, z)
         return ""
     
     def formatheaders (self, style):
         if style == 0:
-            return "X,Y,Z,R,G,B\n" 
-        if style == 1:
-            return "X,Y,Z\n" 
-        if style == 2:
-            return "X Y Z\n"
-        if style == 3:
             return "X Y Z R G B\n"
+        if style == 1:
+            return "X,Y,Z,R,G,B\n" 
+        if style == 2:
+            return "X,Y,Z\n" 
+        if style == 3:
+            return "X Y Z\n"
         return ""
       
     def run(self):
         ret = None
         self.progresstext.emit("Started...")
         fo = open(self.wid.dlg.leOutputFilename.text(),"w")
+
         16
         self.infotext.emit(self.getstartinfo())
         ct = 0

@@ -94,7 +94,7 @@ class RastersToXYZRGB(object):
     - DSM is in band 1 
     '''
     
-    def __init__(self, filenameOrtho, filenameDSM, resolution, nodata = [0]):
+    def __init__(self, filenameOrtho, filenameDSM, resolution, writenodata = False, nodata = [0], outputnodata = -100):
         self.resolution = resolution
         self.filenameOrtho = filenameOrtho
         self.filenameDSM = filenameDSM
@@ -104,6 +104,8 @@ class RastersToXYZRGB(object):
         self.green = RasterReader(filenameOrtho, 2, resolution)
         self.blue = RasterReader(filenameOrtho, 3, resolution)
         self.dsm = RasterReader(filenameDSM, 1, resolution)
+        self.outputnodata = outputnodata
+        self.writenodata = writenodata
         print "Successfully read!"
         
     def getPoints(self):
@@ -143,13 +145,22 @@ class RastersToXYZRGB(object):
                     x,y = self.red.getrealcoord(col, row, 0, 0)   
                     z = self.dsm.gettile(col,row)
                     progress = int((float(cnt)/numpts)*100.0)
-                    if not int(z) in self.nodata:
-                        yield (progress,(x,y,z,r,g,b)) 
-                        cnt += 1
+                    if not self.writenodata:
+                        # default, only write pixels w/ data
+                        if not int(z) in self.nodata:
+                            yield (progress,(x,y,z,r,g,b)) 
+                            cnt += 1
+                        else:
+                            cnt += 1
+                            self.dropped += 1
+                            yield (progress,())
                     else:
-                        cnt += 1
-                        self.dropped += 1
-                        yield (progress,())
+                        if int(z) in self.nodata:
+                            yield (progress,(x,y,self.outputnodata,r,g,b)) 
+                            cnt += 1
+                        else:
+                            yield (progress,(x,y,z,r,g,b)) 
+                            cnt += 1
                 except:
                     # read outside of raster
                     pass
