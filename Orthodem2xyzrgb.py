@@ -124,6 +124,7 @@ class Worker(QtCore.QObject):
 
         16
         self.infotext.emit(self.getstartinfo())
+        dojitter = self.wid.dlg.cbJitter.isChecked()
         ct = 0
         tick = time.time()
         if self.headers:
@@ -135,8 +136,9 @@ class Worker(QtCore.QObject):
             for prog, point in self.rdr.getPointsAndProgress():
                 if len(point) > 0:
                     x,y,z,r,g,b = point
-                    x = x - jitter + (2.0*random.random()*jitter)
-                    y = y - jitter + (2.0*random.random()*jitter)
+                    if dojitter:
+                        x = x - jitter + (2.0*random.random()*jitter)
+                        y = y - jitter + (2.0*random.random()*jitter)
                     line = self.formatline (self.style, x, y, z, r, g, b)
                     fo.write(line)
                     ct += 1
