@@ -5,7 +5,8 @@ QGIS Plugin to create XYZRGB point cloud files from an Orthomosaic and correspon
 You'll need
 + an orthorectified orthomosaic (normal or transparent)
 + a corresponding DSM
-A small example is included with the project.
+
+An example Orthomoasic and DSM are included with the project.
 
 It's assumed that
 + the orthomosaic is a 3 band RGB
@@ -24,6 +25,6 @@ You can choose
 You can view the pointcloud in a number of ways...
 - using SAGA, import point cloud from text file (use X,Y,Z format)
 - the point cloud viewer from Mapbox ( https://github.com/mapbox/pointcloud ). Use the "X Y Z R G B" option
-- QGIS, by using the "x,y,z,r,g,b" format with headers enabled, and loading in as a POINT layer from a CSV file
+- QGIS, by using the "x,y,z,r,g,b" format (with headers enabled), and loading in as a POINT layer from a CSV file
 
 To get you started there are a sample DSM and Orthomosaic in the plugin folder.
