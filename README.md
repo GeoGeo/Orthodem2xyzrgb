@@ -1,15 +1,17 @@
 # Orthodem2xyzrgb
 
-QGIS Plugin to create XYZRGB point cloud files from an Orthomosaic / DSM image pair 
+QGIS Plugin to create XYZRGB point cloud files from an Orthomosaic and corresponding DSM/DEM
 
 You'll need
 + an orthorectified orthomosaic (normal or transparent)
 + a corresponding DSM
 
+An example Orthomoasic and DSM are included with the project.
+
 It's assumed that
 + the orthomosaic is a 3 band RGB
 + both orthomosaic and dsm are same extents, pixelsize and CRS
-+ neither image is rotated (i.e. one edge is the N-S axis)
++ neither image is rotated (i.e. one edge is aligned N-S)
 
 You can choose
 + the sample interval N. The points are sampled in the X and Y directions every N pixels
@@ -23,6 +25,6 @@ You can choose
 You can view the pointcloud in a number of ways...
 - using SAGA, import point cloud from text file (use X,Y,Z format)
 - the point cloud viewer from Mapbox ( https://github.com/mapbox/pointcloud ). Use the "X Y Z R G B" option
-- QGIS, by using the "x,y,z,r,g,b" format with headers enabled, and loading in as a POINT layer from a CSV file
+- QGIS, by using the "x,y,z,r,g,b" format (with headers enabled), and loading in as a POINT layer from a CSV file
 
 To get you started there are a sample DSM and Orthomosaic in the plugin folder.
