@@ -7,11 +7,11 @@
 # This file should be included when you package your plugin.# Mandatory items:
 
 [general]
-name=Create xyzrgb from Mosaic/DSM
+name=Create xyzrgb from OrthoMosaic and DSM
 qgisMinimumVersion=2.0
-description=This plugin creates xyzrgb point clouds
+description=This plugin creates xyzrgb point clouds from identically projected DSM and Orthomosaic rasters.
 version=0.1
-author=Steven Kay GeoGeo
+author=Steven Kay, GeoGeo
 email=steven@geogeoglobal.com
 
 # End of mandatory metadata
@@ -22,14 +22,14 @@ email=steven@geogeoglobal.com
 # changelog=
 
 # Tags are comma separated with spaces allowed
-tags=
+tags=Orthomosaic,DEM,DSM,Raster,XYZ,XYZRGB,Point,Cloud,Aerial,Drone
 
-homepage=
-tracker=
-repository=
+homepage=https://github.com/GeoGeo/Orthodem2xyzrgb
+tracker=https://github.com/GeoGeo/Orthodem2xyzrgb/issues
+repository=https://github.com/GeoGeo/Orthodem2xyzrgb
 icon=icon.png
 # experimental flag
-experimental=False
+experimental=True
 
 # deprecated flag (applies to the whole plugin, not just a single version)
 deprecated=False
